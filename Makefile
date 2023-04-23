@@ -114,7 +114,7 @@ DATE := $(shell date +%Y%m%d)
 # Compute the full local version string so packages can use it as-is
 # Need to export it, so it can be got from environment in children (eg. mconf)
 
-BR2_LOCALVERSION := $(shell $(TOPDIR)/support/scripts/setlocalversion)
+#BR2_LOCALVERSION := $(shell $(TOPDIR)/support/scripts/setlocalversion)
 ifeq ($(BR2_LOCALVERSION),)
 export BR2_VERSION_FULL := $(BR2_VERSION)
 else
@@ -795,7 +795,7 @@ endif # merged /usr
 
 	$(foreach d, $(call qstrip,$(BR2_ROOTFS_OVERLAY)), \
 		@$(call MESSAGE,"Copying overlay $(d)")$(sep) \
-		$(Q)$(call SYSTEM_RSYNC,$(d),$(TARGET_DIR))$(sep))
+		rsync -a --ignore-times $(d)/ $(TARGET_DIR)/$(sep))
 
 	$(Q)$(if $(TARGET_DIR_FILES_LISTS), \
 		cat $(TARGET_DIR_FILES_LISTS)) > $(BUILD_DIR)/packages-file-list.txt
