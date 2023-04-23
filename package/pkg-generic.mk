@@ -384,7 +384,7 @@ $(BUILD_DIR)/%/.stamp_target_installed:
 	+$($(PKG)_INSTALL_TARGET_CMDS)
 	$(if $(BR2_INIT_SYSTEMD),\
 		$($(PKG)_INSTALL_INIT_SYSTEMD))
-	$(if $(BR2_INIT_SYSV)$(BR2_INIT_BUSYBOX),\
+	$(if $(BR2_PACKAGE_INITSCRIPTS),\
 		$($(PKG)_INSTALL_INIT_SYSV))
 	$(if $(BR2_INIT_OPENRC), \
 		$(or $($(PKG)_INSTALL_INIT_OPENRC), \

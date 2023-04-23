@@ -1,4 +1,6 @@
 config BR2_PACKAGE_INITSCRIPTS
-	bool
+	bool "initscripts"
+	default y
+	depends on BR2_INIT_BUSYBOX || BR2_INIT_SYSV
 	help
-	  The basics startup scripts for both SysV and Busybox
+	  The basic startup scripts for both SysV and Busybox
