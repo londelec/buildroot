@@ -13,6 +13,8 @@ LESS_DEPENDENCIES = ncurses
 
 define LESS_INSTALL_TARGET_CMDS
 	$(INSTALL) -m 0755 $(@D)/less $(TARGET_DIR)/usr/bin/less
+	$(INSTALL) -m 0755 $(@D)/lessecho $(TARGET_DIR)/usr/bin/lessecho
+	$(INSTALL) -m 0755 $(@D)/lesskey $(TARGET_DIR)/usr/bin/lesskey
 endef
 
 $(eval $(autotools-package))
