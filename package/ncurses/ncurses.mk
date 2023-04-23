@@ -101,13 +101,16 @@ NCURSES_TERMINFO_FILES = \
 	p/putty \
 	p/putty-256color \
 	p/putty-vt100 \
+	r/rxvt \
 	s/screen \
 	s/screen-256color \
+	s/sun \
 	v/vt100 \
 	v/vt100-putty \
 	v/vt102 \
 	v/vt200 \
 	v/vt220 \
+	v/vt52 \
 	x/xterm \
 	x/xterm+256color \
 	x/xterm-256color \
