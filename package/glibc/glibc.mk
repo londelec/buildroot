@@ -7,7 +7,7 @@
 # Generate version string using:
 #   git describe --match 'glibc-*' --abbrev=40 origin/release/MAJOR.MINOR/master | cut -d '-' -f 2-
 # When updating the version, please also update localedef
-GLIBC_VERSION = 2.34-109-gd64b08d5ba7ffbc9155630f4843cf2e271b1629c
+GLIBC_VERSION = 2.32-37-g760e1d287825fa91d4d5a0cc921340c740d803e2
 # Upstream doesn't officially provide an https download link.
 # There is one (https://sourceware.org/git/glibc.git) but it's not reliable,
 # sometimes the connection times out. So use an unofficial github mirror.
@@ -152,7 +152,8 @@ GLIBC_LIBS_LIB += libthread_db.so.*
 endif
 
 ifeq ($(BR2_PACKAGE_GLIBC_UTILS),y)
-GLIBC_TARGET_UTILS_USR_BIN = posix/getconf elf/ldd
+GLIBC_TARGET_UTILS_USR_BIN = posix/getconf elf/ldd nss/getent catgets/gencat nss/makedb malloc/mtrace debug/pcprofiledump elf/pldd elf/sotruss elf/sprof timezone/tzselect
+GLIBC_TARGET_UTILS_USR_SBIN = timezone/zdump timezone/zic
 GLIBC_TARGET_UTILS_SBIN = elf/ldconfig
 ifeq ($(BR2_SYSTEM_ENABLE_NLS),y)
 GLIBC_TARGET_UTILS_USR_BIN += locale/locale
@@ -165,6 +166,9 @@ define GLIBC_INSTALL_TARGET_CMDS
 	done
 	$(foreach util,$(GLIBC_TARGET_UTILS_USR_BIN), \
 		$(INSTALL) -D -m 0755 $(@D)/build/$(util) $(TARGET_DIR)/usr/bin/$(notdir $(util))
+	)
+	$(foreach util,$(GLIBC_TARGET_UTILS_USR_SBIN), \
+		$(INSTALL) -D -m 0755 $(@D)/build/$(util) $(TARGET_DIR)/usr/sbin/$(notdir $(util))
 	)
 	$(foreach util,$(GLIBC_TARGET_UTILS_SBIN), \
 		$(INSTALL) -D -m 0755 $(@D)/build/$(util) $(TARGET_DIR)/sbin/$(notdir $(util))
