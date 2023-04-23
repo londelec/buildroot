@@ -11,7 +11,7 @@ OPENRESOLV_LICENSE_FILES = LICENSE
 OPENRESOLV_CPE_ID_VENDOR = openresolv_project
 
 define OPENRESOLV_CONFIGURE_CMDS
-	cd $(@D) && $(TARGET_CONFIGURE_OPTS) ./configure --sysconfdir=/etc
+	cd $(@D) && $(TARGET_CONFIGURE_OPTS) ./configure --sysconfdir=/etc --libexecdir=/usr/libexec/resolvconf
 endef
 
 define OPENRESOLV_BUILD_CMDS
