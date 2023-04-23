@@ -95,6 +95,12 @@ config BR2_KERNEL_HEADERS_CUSTOM_GIT
 	  This option allows Buildroot to get the Linux kernel source
 	  code from a Git repository.
 
+config BR2_KERNEL_HEADERS_CUSTOM_EXTERNAL
+	string "Path to kernel build directory"
+	help
+	  This option allows you to specify local path pointing to a
+	  local top level kernel build directory.
+
 endchoice
 
 # Select this for the latest kernel headers version (for license hashes)
@@ -131,7 +137,8 @@ choice
 	depends on !BR2_LINUX_KERNEL_LATEST_CIP_VERSION || !BR2_KERNEL_HEADERS_AS_KERNEL
 	depends on !BR2_LINUX_KERNEL_LATEST_CIP_RT_VERSION || !BR2_KERNEL_HEADERS_AS_KERNEL
 	depends on BR2_KERNEL_HEADERS_VERSION || BR2_KERNEL_HEADERS_AS_KERNEL || \
-		   BR2_KERNEL_HEADERS_CUSTOM_TARBALL || BR2_KERNEL_HEADERS_CUSTOM_GIT
+		   BR2_KERNEL_HEADERS_CUSTOM_TARBALL || BR2_KERNEL_HEADERS_CUSTOM_GIT || \
+		   BR2_KERNEL_HEADERS_CUSTOM_EXTERNAL
 	help
 	  Specify the kernel headers series you manually selected,
 	  above.

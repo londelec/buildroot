@@ -63,6 +63,8 @@ LINUX_HEADERS_SITE_METHOD = svn
 else ifeq ($(LINUX_HEADERS_CIP),y)
 LINUX_HEADERS_SOURCE = linux-cip-$(LINUX_HEADERS_VERSION).tar.gz
 LINUX_HEADERS_SITE = https://git.kernel.org/pub/scm/linux/kernel/git/cip/linux-cip.git/snapshot
+else ifneq ($(BR2_KERNEL_HEADERS_CUSTOM_EXTERNAL),)
+LINUX_HEADERS_SOURCE =
 else ifneq ($(findstring -rc,$(LINUX_HEADERS_VERSION)),)
 # Since 4.12-rc1, -rc kernels are generated from cgit. This also works for
 # older -rc kernels.
@@ -135,6 +137,7 @@ LINUX_HEADERS_ADD_TOOLCHAIN_DEPENDENCY = NO
 # This step is required to have a separate linux headers location for
 # uClibc building. This way uClibc doesn't modify linux headers on installation
 # of "its" headers
+ifeq ($(BR2_KERNEL_HEADERS_CUSTOM_EXTERNAL),)
 define LINUX_HEADERS_CONFIGURE_CMDS
 	(cd $(@D); \
 		$(TARGET_MAKE_ENV) $(MAKE) \
@@ -156,6 +159,18 @@ define LINUX_HEADERS_INSTALL_STAGING_CMDS
 			INSTALL_HDR_PATH=$(STAGING_DIR)/usr \
 			headers_install)
 endef
+else
+define LINUX_HEADERS_INSTALL_STAGING_CMDS
+	(cd $(BR2_KERNEL_HEADERS_CUSTOM_EXTERNAL); \
+		$(TARGET_MAKE_ENV) $(MAKE) \
+			ARCH=$(KERNEL_ARCH) \
+			HOSTCC="$(HOSTCC)" \
+			HOSTCFLAGS="$(HOSTCFLAGS)" \
+			HOSTCXX="$(HOSTCXX)" \
+			INSTALL_HDR_PATH=$(STAGING_DIR)/usr \
+			headers_install)
+endef
+endif
 
 ifeq ($(BR2_KERNEL_HEADERS_VERSION)$(BR2_KERNEL_HEADERS_AS_KERNEL)$(BR2_KERNEL_HEADERS_CUSTOM_TARBALL)$(BR2_KERNEL_HEADERS_CUSTOM_GIT),y)
 # In this case, we must always do a 'loose' test, because they are all
