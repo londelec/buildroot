@@ -1,0 +1,9 @@
+config BR2_PACKAGE_CRON
+	bool "cron"
+	depends on BR2_USE_MMU # fork()
+	depends on BR2_PACKAGE_BUSYBOX_SHOW_OTHERS
+	help
+	  The cron daemon is a background process that runs particular programs at
+	  particular times (for example, every minute, day, week, or month), as
+	  specified in a crontab. By default, users may also create crontabs of
+	  their own so that processes are run on their behalf.
